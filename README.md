@@ -9,7 +9,8 @@ a package was created web3dart_builders
 # Installation
 
 1. Add to pubspec.yaml of your project in dev_dependencies web3dart_builders
-2. Remove build.yaml file from web3dart package
+2. Remove build.yaml file from web3dart package. ([xclud/web3dart](https://github.com/xclud/web3dart) need accept a pull request [#30 remove build.yaml](https://github.com/xclud/web3dart/pull/30))
+
 
 # Usage
 

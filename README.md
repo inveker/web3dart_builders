@@ -1,39 +1,20 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Description
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+This project is part of this repository [simolus3/web3dart](https://github.com/simolus3/web3dart).
+Since it is now maintained by another developer ([xclud/web3dart](https://github.com/xclud/web3dart))
+who decided to remove the generator code after version 2.3.5,
+in order to move this code as a separate dependency so that it can be placed in dev_dependencies,
+a package was created web3dart_builders
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+# Installation
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+1. Add to pubspec.yaml of your project in dev_dependencies web3dart_builders
+2. Remove build.yaml file from web3dart package
 
-## Features
+# Usage
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+    flutter pub run build_runner build
 
-## Getting started
+or
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+    flutter pub run build_runner watch

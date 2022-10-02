@@ -11,7 +11,7 @@ in order to move this code as a separate dependency so that it can be placed in 
 a package was created web3dart_builders
 
 
-Source code has not been edited except for imports
+The source code has not been edited, except for importing libraries and tests, the test cases have been modified according to the code that was generated on my computer. (Tests from the original repository failed)
 
 # Installation
 
@@ -27,3 +27,7 @@ Source code has not been edited except for imports
 or
 
     flutter pub run build_runner watch
+
+# Test
+
+    flutter test

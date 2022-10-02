@@ -15,19 +15,22 @@ The source code has not been edited, except for importing libraries and tests, t
 
 # Installation
 
-1. Add to pubspec.yaml in your project: dev_dependencies: web3dart_builders: ^0.0.1
+1. Add to pubspec.yaml in your project: dev_dependencies: web3dart_builders: ^0.0.1 or call
+
+    dart pub add build_runner --dev
+
 2. Remove all from file flutter/.pub-cache/hosted/pub.dartlang.org/web3dart-2.4.1/build.yaml file from web3dart package
  Or wait where ([xclud/web3dart](https://github.com/xclud/web3dart) accept a pull request [#30 remove build.yaml](https://github.com/xclud/web3dart/pull/30))
 
 
 # Usage
 
-    flutter pub run build_runner build
+    pub run build_runner build
 
 or
 
-    flutter pub run build_runner watch
+    pub run build_runner watch
 
 # Test
 
-    flutter test
+    dart test

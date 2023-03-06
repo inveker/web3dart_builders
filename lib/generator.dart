@@ -8,6 +8,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:path/path.dart';
 import 'package:web3dart/contracts.dart';
 import 'package:web3dart/crypto.dart';
+import 'package:web3dart/web3dart.dart';
 
 import 'documentation.dart';
 import 'utils.dart';
@@ -17,14 +18,14 @@ class ContractGenerator implements Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => const {
-    '.abi.json': ['.g.dart']
-  };
+        '.abi.json': ['.g.dart']
+      };
 
   @override
   Future<void> build(BuildStep buildStep) async {
     final inputId = buildStep.inputId;
     final withoutExtension =
-    inputId.path.substring(0, inputId.path.length - '.abi.json'.length);
+        inputId.path.substring(0, inputId.path.length - '.abi.json'.length);
 
     final source = json.decode(await buildStep.readAsString(inputId));
     Documentation? documentation;
@@ -212,7 +213,7 @@ class _ContractGeneration {
     if (docs != null) {
       b.docs
         ..add(docs)
-      // Add blank line if we had regular docs.
+        // Add blank line if we had regular docs.
         ..add('///');
     }
 
@@ -242,7 +243,7 @@ class _ContractGeneration {
 
   Code _bodyForImmutable(ContractFunction function, int index) {
     final params =
-    function.parameters.map((e) => refer(_nameOfParameter(e))).toList();
+        function.parameters.map((e) => refer(_nameOfParameter(e))).toList();
 
     final outputs = function.outputs;
     Expression returnValue;
@@ -315,7 +316,10 @@ class _ContractGeneration {
       initializers.add(
           refer(name).assign(refer('response[$i]').castTo(solidityType)).code);
     }
-
+    fields.add(Field((b) => b
+      ..name = "event"
+      ..type = filterEvent
+      ..modifier = FieldModifier.final$));
     _additionalSpecs.add(Class((b) {
       b
         ..name = name
@@ -324,6 +328,7 @@ class _ContractGeneration {
           ..requiredParameters.add(Parameter((b) => b
             ..name = 'response'
             ..type = listify(dynamicType)))
+          ..requiredParameters.add(Parameter((b) => b..name = 'this.event'))
           ..initializers.addAll(initializers)));
 
       if (docs != null) b.docs.add(docs);
@@ -340,20 +345,22 @@ class _ContractGeneration {
     final nullableBlockNum = blockNum.rebuild((b) => b.isNullable = true);
 
     final mapper = Method(
-          (b) => b
+      (b) => b
         ..requiredParameters.add(Parameter((b) => b
           ..name = 'result'
           ..type = filterEvent))
         ..body = Block(
-              (b) => b
+          (b) => b
             ..addExpression(
                 refer('event').property('decodeResults').call(const [
-                  // todo: Use nullChecked after https://github.com/dart-lang/code_builder/pull/325
-                  CodeExpression(Code('result.topics!')),
-                  CodeExpression(Code('result.data!')),
-                ]).assignFinal('decoded'))
-            ..addExpression(
-                eventClass.newInstance([refer('decoded')]).returned),
+              // todo: Use nullChecked after https://github.com/dart-lang/code_builder/pull/325
+              CodeExpression(Code('result.topics!')),
+              CodeExpression(Code('result.data!')),
+            ]).assignFinal('decoded'))
+            ..addExpression(eventClass.newInstance([
+              refer('decoded'),
+              CodeExpression(Code('result')),
+            ]).returned),
         ),
     );
 
@@ -392,7 +399,7 @@ class _ContractGeneration {
   void _assignFunction(
       ListBuilder<Code> statements, ContractFunction function, int index) {
     final functionExpr =
-    self.property('abi').property('functions').index(literalNum(index));
+        self.property('abi').property('functions').index(literalNum(index));
 
     statements.add(functionExpr.assignFinal('function').statement);
 
@@ -437,12 +444,12 @@ extension on Expression {
         // If we have nested list structures, we need to cast the inner ones by
         // using .map((e) => (e as List).cast())
         final m = Method(
-              (b) => b
+          (b) => b
             ..requiredParameters.add(
               Parameter((b) => b.name = 'e'),
             )
             ..body = Block(
-                  (b) => b
+              (b) => b
                 ..addExpression(
                     refer('e').castTo(inner, knownToBeList: true).returned),
             ),
@@ -450,10 +457,10 @@ extension on Expression {
         result = result
             .property('map')
             .call(
-          [m.closure],
-          const {},
-          [inner.toDart()],
-        )
+              [m.closure],
+              const {},
+              [inner.toDart()],
+            )
             .property('toList')
             .call(const []);
       }

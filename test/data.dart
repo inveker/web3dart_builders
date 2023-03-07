@@ -84,8 +84,10 @@ class Contract extends _i1.GeneratedContract {
 }
 
 class Retrieve3 {
-  Retrieve3(List<dynamic> response)
-      : var1 = (response[0] as String),
+  Retrieve3(
+    List<dynamic> response,
+    this.event,
+  )   : var1 = (response[0] as String),
         var2 = (response[1] as BigInt),
         var3 = (response[2] as bool);
 
@@ -94,6 +96,8 @@ class Retrieve3 {
   final BigInt var2;
 
   final bool var3;
+
+  final _i1.FilterEvent event;
 }
 ''',
   r'''
@@ -223,8 +227,10 @@ class Contract extends _i1.GeneratedContract {
 }
 
 class GiveMeHello {
-  GiveMeHello(List<dynamic> response)
-      : message = (response[0] as String),
+  GiveMeHello(
+    List<dynamic> response,
+    this.event,
+  )   : message = (response[0] as String),
         num1 = (response[1] as BigInt),
         num2 = (response[2] as BigInt);
 
@@ -233,6 +239,8 @@ class GiveMeHello {
   final BigInt num1;
 
   final BigInt num2;
+
+  final _i1.FilterEvent event;
 }
 ''',
   r'''

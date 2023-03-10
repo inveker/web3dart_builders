@@ -298,7 +298,7 @@ class _ContractGeneration {
   }
 
   Reference _generateResultClass(List<FunctionParameter> params, String name,
-      {String? docs}) {
+      {String? docs, bool event = false}) {
     final fields = <Field>[];
     final initializers = <Code>[];
     for (var i = 0; i < params.length; i++) {
@@ -316,19 +316,24 @@ class _ContractGeneration {
       initializers.add(
           refer(name).assign(refer('response[$i]').castTo(solidityType)).code);
     }
-    fields.add(Field((b) => b
-      ..name = "event"
-      ..type = filterEvent
-      ..modifier = FieldModifier.final$));
+    if (event) {
+      fields.add(Field((b) => b
+        ..name = "event"
+        ..type = filterEvent
+        ..modifier = FieldModifier.final$));
+    }
+    List<Parameter> requiredParameters = [
+      Parameter((b) => b
+        ..name = 'response'
+        ..type = listify(dynamicType)),
+      if (event) Parameter((b) => b..name = 'this.event')
+    ];
     _additionalSpecs.add(Class((b) {
       b
         ..name = name
         ..fields.addAll(fields)
         ..constructors.add(Constructor((b) => b
-          ..requiredParameters.add(Parameter((b) => b
-            ..name = 'response'
-            ..type = listify(dynamicType)))
-          ..requiredParameters.add(Parameter((b) => b..name = 'this.event'))
+          ..requiredParameters.addAll(requiredParameters)
           ..initializers.addAll(initializers)));
 
       if (docs != null) b.docs.add(docs);
@@ -341,7 +346,7 @@ class _ContractGeneration {
     final name = event.name;
     final eventClass = _generateResultClass(
         event.components.map((e) => e.parameter).toList(), name,
-        docs: documentation?.forEvent(event));
+        docs: documentation?.forEvent(event), event: true);
     final nullableBlockNum = blockNum.rebuild((b) => b.isNullable = true);
 
     final mapper = Method(

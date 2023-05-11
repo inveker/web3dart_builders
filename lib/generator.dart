@@ -246,10 +246,10 @@ class _ContractGeneration {
         function.parameters.map((e) => refer(_nameOfParameter(e))).toList();
 
     final outputs = function.outputs;
-    Expression returnValue;
+    Expression? returnValue;
     if (outputs.length > 1) {
       returnValue = _resultClassFor(function).newInstance([refer('response')]);
-    } else {
+    } else if(outputs.length == 1) {
       returnValue = refer('response')
           .index(literalNum(0))
           .castTo(function.outputs.single.type);
@@ -263,8 +263,10 @@ class _ContractGeneration {
         ..addExpression(refer('read')
             .call([argFunction, argParams, refer('atBlock')])
             .awaited
-            .assignFinal('response'))
-        ..addExpression(returnValue.returned);
+            .assignFinal('response'));
+      if(returnValue != null) {
+        b.addExpression(returnValue.returned);
+      }
     });
   }
 

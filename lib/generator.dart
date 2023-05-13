@@ -88,6 +88,7 @@ class _ContractGeneration {
   final Map<FunctionParameter, String> _parameterNames = {};
   final Map<ContractFunction, Reference> _functionToResultClass = {};
   final Map<String, int> _usedFunctionNames = {};
+  final Map<String, int> _usedEventNames = {};
 
   // The `self` field, storing a reference to the deployed contract.
   static final self = refer('self');
@@ -105,6 +106,17 @@ class _ContractGeneration {
       return function.name;
     } else {
       return '${function.name}\$$number';
+    }
+  }
+
+  String _nameOfEvent(ContractEvent event) {
+    final number = _usedEventNames[event.name] =
+        (_usedEventNames[event.name] ?? 0) + 1;
+
+    if (number == 1) {
+      return event.name;
+    } else {
+      return '${event.name}\$$number';
     }
   }
 
@@ -345,7 +357,7 @@ class _ContractGeneration {
   }
 
   void _methodForEvent(ContractEvent event, MethodBuilder b) {
-    final name = event.name;
+    final name = _nameOfEvent(event);
     final eventClass = _generateResultClass(
         event.components.map((e) => e.parameter).toList(), name,
         docs: documentation?.forEvent(event), event: true);

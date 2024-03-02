@@ -77,7 +77,7 @@ final argCredentials = refer('credentials');
 
 final argContract = refer('self');
 final argFunction = refer('function');
-final argParams = refer('params');
+final argParams = refer('\$params');
 
 final argPrivateKey = refer('privateKey');
 

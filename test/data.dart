@@ -70,13 +70,13 @@ class Contract extends _i1.GeneratedContract {
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '2783b284'));
-    final params = [
+    final $params = [
       first,
       second,
     ];
     final response = await read(
       function,
-      params,
+      $params,
       atBlock,
     );
     return Retrieve3(response);
@@ -178,10 +178,10 @@ class Contract extends _i1.GeneratedContract {
   Future<GiveMeHello> giveMeHello({_i1.BlockNum? atBlock}) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '1c1657ea'));
-    final params = [];
+    final $params = [];
     final response = await read(
       function,
-      params,
+      $params,
       atBlock,
     );
     return GiveMeHello(response);
@@ -193,10 +193,10 @@ class Contract extends _i1.GeneratedContract {
   Future<BigInt> retrieve({_i1.BlockNum? atBlock}) async {
     final function = self.abi.functions[1];
     assert(checkSignature(function, '2e64cec1'));
-    final params = [];
+    final $params = [];
     final response = await read(
       function,
-      params,
+      $params,
       atBlock,
     );
     return (response[0] as BigInt);
@@ -212,12 +212,12 @@ class Contract extends _i1.GeneratedContract {
   }) async {
     final function = self.abi.functions[2];
     assert(checkSignature(function, '6057361d'));
-    final params = [num];
+    final $params = [num];
     return write(
       credentials,
       transaction,
       function,
-      params,
+      $params,
     );
   }
 }
@@ -290,10 +290,10 @@ class Contract extends _i1.GeneratedContract {
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '7dbfb5dc'));
-    final params = [$param0];
+    final $params = [$param0];
     final response = await read(
       function,
-      params,
+      $params,
       atBlock,
     );
     return (response[0] as BigInt);
@@ -383,10 +383,10 @@ class Contract extends _i1.GeneratedContract {
   Future<List<List<List<String>>>> test({_i1.BlockNum? atBlock}) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, 'f8a8fd6d'));
-    final params = [];
+    final $params = [];
     final response = await read(
       function,
-      params,
+      $params,
       atBlock,
     );
     return (response[0] as List<dynamic>)
@@ -524,7 +524,7 @@ class Contract extends _i1.GeneratedContract {
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '42842e0e'));
-    final params = [
+    final $params = [
       _from,
       _to,
       _tokenId,
@@ -533,7 +533,7 @@ class Contract extends _i1.GeneratedContract {
       credentials,
       transaction,
       function,
-      params,
+      $params,
     );
   }
 
@@ -550,7 +550,7 @@ class Contract extends _i1.GeneratedContract {
   }) async {
     final function = self.abi.functions[1];
     assert(checkSignature(function, 'b88d4fde'));
-    final params = [
+    final $params = [
       _from,
       _to,
       _tokenId,
@@ -560,7 +560,7 @@ class Contract extends _i1.GeneratedContract {
       credentials,
       transaction,
       function,
-      params,
+      $params,
     );
   }
 }
@@ -626,14 +626,14 @@ class Contract extends _i1.GeneratedContract {
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '2ecff2f6'));
-    final params = [
+    final $params = [
       tokenId,
       serviceType,
       serviceId,
     ];
     final response = await read(
       function,
-      params,
+      $params,
       atBlock,
     );
   }
@@ -802,4 +802,64 @@ class Transfer$2 {
   final _i1.FilterEvent event;
 }
 ''',
+  r'''
+[
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "params",
+          "type": "uint256"
+        }
+      ],
+      "name": "paramsFunc",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+]''': r'''
+// Generated code, do not modify. Run `build_runner build` to re-generate!
+// @dart=2.12
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:web3dart/web3dart.dart' as _i1;
+
+final _contractAbi = _i1.ContractAbi.fromJson(
+  '[{"inputs":[{"internalType":"uint256","name":"params","type":"uint256"}],"name":"paramsFunc","outputs":[],"stateMutability":"nonpayable","type":"function"}]',
+  'Contract',
+);
+
+class Contract extends _i1.GeneratedContract {
+  Contract({
+    required _i1.EthereumAddress address,
+    required _i1.Web3Client client,
+    int? chainId,
+  }) : super(
+          _i1.DeployedContract(
+            _contractAbi,
+            address,
+          ),
+          client,
+          chainId,
+        );
+
+  /// The optional [transaction] parameter can be used to override parameters
+  /// like the gas price, nonce and max gas. The `data` and `to` fields will be
+  /// set by the contract.
+  Future<String> paramsFunc(
+    BigInt params, {
+    required _i1.Credentials credentials,
+    _i1.Transaction? transaction,
+  }) async {
+    final function = self.abi.functions[0];
+    assert(checkSignature(function, 'f6163fb4'));
+    final $params = [params];
+    return write(
+      credentials,
+      transaction,
+      function,
+      $params,
+    );
+  }
+}
+'''
 };

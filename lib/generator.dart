@@ -271,7 +271,7 @@ class _ContractGeneration {
       _assignFunction(b.statements, function, index);
 
       b
-        ..addExpression(literalList(params).assignFinal('params'))
+        ..addExpression(literalList(params).assignFinal('\$params'))
         ..addExpression(refer('read')
             .call([argFunction, argParams, refer('atBlock')])
             .awaited
@@ -288,14 +288,14 @@ class _ContractGeneration {
       argCredentials,
       refer('transaction'),
       refer('function'),
-      refer('params'),
+      refer('\$params'),
     ]);
 
     return Block((b) {
       _assignFunction(b.statements, function, index);
 
       b
-        ..addExpression(literalList(params).assignFinal('params'))
+        ..addExpression(literalList(params).assignFinal('\$params'))
         ..addExpression(funWrite.returned);
     });
   }

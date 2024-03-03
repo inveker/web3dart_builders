@@ -24,8 +24,7 @@ class ContractGenerator implements Builder {
   @override
   Future<void> build(BuildStep buildStep) async {
     final inputId = buildStep.inputId;
-    final withoutExtension =
-        inputId.path.substring(0, inputId.path.length - '.abi.json'.length);
+    final withoutExtension = inputId.path.substring(0, inputId.path.length - '.abi.json'.length);
 
     final source = json.decode(await buildStep.readAsString(inputId));
     Documentation? documentation;
@@ -46,8 +45,7 @@ class ContractGenerator implements Builder {
     }
 
     final outputId = AssetId(inputId.package, '$withoutExtension.g.dart');
-    await buildStep.writeAsString(
-        outputId, _generateForAbi(abi, abiCode, documentation));
+    await buildStep.writeAsString(outputId, _generateForAbi(abi, abiCode, documentation));
   }
 
   String _suggestName(String pathWithoutExtension) {
@@ -60,11 +58,10 @@ class ContractGenerator implements Builder {
     final generation = _ContractGeneration(abi, abiCode, docs);
     final library = generation.generate();
 
-    final emitter = DartEmitter(
-        allocator: Allocator.simplePrefixing(), useNullSafetySyntax: true);
+    final emitter = DartEmitter(allocator: Allocator.simplePrefixing(), useNullSafetySyntax: true);
     final source = '''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 ${library.accept(emitter)}''';
 
     try {
@@ -99,8 +96,7 @@ class _ContractGeneration {
   _ContractGeneration(this._abi, this._abiCode, this.documentation);
 
   String _nameOfFunction(ContractFunction function) {
-    final number = _usedFunctionNames[function.name] =
-        (_usedFunctionNames[function.name] ?? 0) + 1;
+    final number = _usedFunctionNames[function.name] = (_usedFunctionNames[function.name] ?? 0) + 1;
 
     if (number == 1) {
       return function.name;
@@ -110,8 +106,7 @@ class _ContractGeneration {
   }
 
   String _nameOfEvent(ContractEvent event) {
-    final number = _usedEventNames[event.name] =
-        (_usedEventNames[event.name] ?? 0) + 1;
+    final number = _usedEventNames[event.name] = (_usedEventNames[event.name] ?? 0) + 1;
 
     if (number == 1) {
       return event.name;
@@ -154,9 +149,7 @@ class _ContractGeneration {
       }
     }
 
-    b.methods.addAll([
-      for (final event in _abi.events) Method((b) => _methodForEvent(event, b))
-    ]);
+    b.methods.addAll([for (final event in _abi.events) Method((b) => _methodForEvent(event, b))]);
 
     final details = documentation?.forContract();
     if (details != null) b.docs.add(details);
@@ -196,9 +189,7 @@ class _ContractGeneration {
       ..modifier = MethodModifier.async
       ..returns = _returnType(fun)
       ..name = _nameOfFunction(fun)
-      ..body = fun.isConstant
-          ? _bodyForImmutable(fun, index)
-          : _bodyForMutable(fun, index)
+      ..body = fun.isConstant ? _bodyForImmutable(fun, index) : _bodyForMutable(fun, index)
       ..requiredParameters.addAll(_parametersFor(fun));
 
     if (!fun.isConstant) {
@@ -242,29 +233,42 @@ class _ContractGeneration {
     }
   }
 
-  List<Parameter> _parametersFor(ContractFunction function) {
-    final parameters = <Parameter>[];
-    for (final param in function.parameters) {
-      parameters.add(Parameter((b) => b
-        ..name = _nameOfParameter(param)
-        ..type = param.type.toDart()));
-    }
+  // List<Parameter> _parametersFor(ContractFunction function) {
+  //   final parameters = <Parameter>[];
+  //   for (final param in function.parameters) {
+  //     parameters.add(Parameter((b) => b
+  //       ..name = _nameOfParameter(param)
+  //       ..type = param.type.toDart()));
+  //   }
+  //
+  //   return parameters;
+  // }
 
-    return parameters;
+  List<Parameter> _parametersFor(ContractFunction function) {
+    return [
+      if (function.parameters.isNotEmpty)
+        Parameter((b) => b
+          ..name = 'args'
+          ..type = RecordType(
+            (b) => b
+              ..namedFieldTypes.addAll(
+                {
+                  for (final param in function.parameters) _nameOfParameter(param): param.type.toDart(),
+                },
+              ),
+          ))
+    ];
   }
 
   Code _bodyForImmutable(ContractFunction function, int index) {
-    final params =
-        function.parameters.map((e) => refer(_nameOfParameter(e))).toList();
+    final params = function.parameters.map((e) => refer('args.${_nameOfParameter(e)}')).toList();
 
     final outputs = function.outputs;
     Expression? returnValue;
     if (outputs.length > 1) {
       returnValue = _resultClassFor(function).newInstance([refer('response')]);
-    } else if(outputs.length == 1) {
-      returnValue = refer('response')
-          .index(literalNum(0))
-          .castTo(function.outputs.single.type);
+    } else if (outputs.length == 1) {
+      returnValue = refer('response').index(literalNum(0)).castTo(function.outputs.single.type);
     }
 
     return Block((b) {
@@ -272,18 +276,15 @@ class _ContractGeneration {
 
       b
         ..addExpression(literalList(params).assignFinal('params'))
-        ..addExpression(refer('read')
-            .call([argFunction, argParams, refer('atBlock')])
-            .awaited
-            .assignFinal('response'));
-      if(returnValue != null) {
+        ..addExpression(refer('read').call([argFunction, argParams, refer('atBlock')]).awaited.assignFinal('response'));
+      if (returnValue != null) {
         b.addExpression(returnValue.returned);
       }
     });
   }
 
   Code _bodyForMutable(ContractFunction function, int index) {
-    final params = function.parameters.map((e) => refer(e.name)).toList();
+    final params = function.parameters.map((e) => refer('args.${e.name}')).toList();
     final funWrite = refer('write').call([
       argCredentials,
       refer('transaction'),
@@ -305,14 +306,12 @@ class _ContractGeneration {
   Reference _resultClassFor(ContractFunction function) {
     return _functionToResultClass.putIfAbsent(function, () {
       final functionName = function.name;
-      final name =
-          '${functionName[0].toUpperCase()}${functionName.substring(1)}';
+      final name = '${functionName[0].toUpperCase()}${functionName.substring(1)}';
       return _generateResultClass(function.outputs, name);
     });
   }
 
-  Reference _generateResultClass(List<FunctionParameter> params, String name,
-      {String? docs, bool event = false}) {
+  Reference _generateResultClass(List<FunctionParameter> params, String name, {String? docs, bool event = false}) {
     final fields = <Field>[];
     final initializers = <Code>[];
     for (var i = 0; i < params.length; i++) {
@@ -327,8 +326,7 @@ class _ContractGeneration {
         ..type = type
         ..modifier = FieldModifier.final$));
 
-      initializers.add(
-          refer(name).assign(refer('response[$i]').castTo(solidityType)).code);
+      initializers.add(refer(name).assign(refer('response[$i]').castTo(solidityType)).code);
     }
     if (event) {
       fields.add(Field((b) => b
@@ -404,21 +402,14 @@ class _ContractGeneration {
           'fromBlock': refer('fromBlock'),
           'toBlock': refer('toBlock'),
         }).assignFinal('filter'))
-        ..addExpression(client
-            .property('events')
-            .call([refer('filter')])
-            .property('map')
-            .call([mapper.closure])
-            .returned));
+        ..addExpression(client.property('events').call([refer('filter')]).property('map').call([mapper.closure]).returned));
   }
 
   /// Declares a variable named `function` initialized to the [function].
   /// We use an index instead of looking up the name to support overloaded
   /// functions.
-  void _assignFunction(
-      ListBuilder<Code> statements, ContractFunction function, int index) {
-    final functionExpr =
-        self.property('abi').property('functions').index(literalNum(index));
+  void _assignFunction(ListBuilder<Code> statements, ContractFunction function, int index) {
+    final functionExpr = self.property('abi').property('functions').index(literalNum(index));
 
     statements.add(functionExpr.assignFinal('function').statement);
 
@@ -468,9 +459,7 @@ extension on Expression {
               Parameter((b) => b.name = 'e'),
             )
             ..body = Block(
-              (b) => b
-                ..addExpression(
-                    refer('e').castTo(inner, knownToBeList: true).returned),
+              (b) => b..addExpression(refer('e').castTo(inner, knownToBeList: true).returned),
             ),
         );
         result = result

@@ -37,7 +37,7 @@ const testCases = <String, String>{
     }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -64,15 +64,14 @@ class Contract extends _i1.GeneratedContract {
   /// set, the function will be evaluated in the specified block. By default, the
   /// latest on-chain block will be used.
   Future<Retrieve3> retrieve3(
-    BigInt first,
-    BigInt second, {
+    ({BigInt first, BigInt second}) args, {
     _i1.BlockNum? atBlock,
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '2783b284'));
     final params = [
-      first,
-      second,
+      args.first,
+      args.second,
     ];
     final response = await read(
       function,
@@ -149,7 +148,7 @@ class Retrieve3 {
     }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -206,13 +205,13 @@ class Contract extends _i1.GeneratedContract {
   /// like the gas price, nonce and max gas. The `data` and `to` fields will be
   /// set by the contract.
   Future<String> store(
-    BigInt num, {
+    ({BigInt num}) args, {
     required _i1.Credentials credentials,
     _i1.Transaction? transaction,
   }) async {
     final function = self.abi.functions[2];
     assert(checkSignature(function, '6057361d'));
-    final params = [num];
+    final params = [args.num];
     return write(
       credentials,
       transaction,
@@ -258,7 +257,7 @@ class GiveMeHello {
     }   
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -285,12 +284,12 @@ class Contract extends _i1.GeneratedContract {
   /// set, the function will be evaluated in the specified block. By default, the
   /// latest on-chain block will be used.
   Future<BigInt> userTotalAmount(
-    _i1.EthereumAddress $param0, {
+    ({_i1.EthereumAddress $param0}) args, {
     _i1.BlockNum? atBlock,
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '7dbfb5dc'));
-    final params = [$param0];
+    final params = [args.$param0];
     final response = await read(
       function,
       params,
@@ -313,7 +312,7 @@ class Contract extends _i1.GeneratedContract {
     }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -354,7 +353,7 @@ class Contract extends _i1.GeneratedContract {
     }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -409,7 +408,7 @@ class Contract extends _i1.GeneratedContract {
     }
 }''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -488,7 +487,7 @@ class Contract extends _i1.GeneratedContract {
     }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 import 'dart:typed_data' as _i2;
@@ -516,18 +515,20 @@ class Contract extends _i1.GeneratedContract {
   /// like the gas price, nonce and max gas. The `data` and `to` fields will be
   /// set by the contract.
   Future<String> safeTransferFrom(
-    _i1.EthereumAddress _from,
-    _i1.EthereumAddress _to,
-    BigInt _tokenId, {
+    ({
+      _i1.EthereumAddress _from,
+      _i1.EthereumAddress _to,
+      BigInt _tokenId
+    }) args, {
     required _i1.Credentials credentials,
     _i1.Transaction? transaction,
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '42842e0e'));
     final params = [
-      _from,
-      _to,
-      _tokenId,
+      args._from,
+      args._to,
+      args._tokenId,
     ];
     return write(
       credentials,
@@ -541,20 +542,22 @@ class Contract extends _i1.GeneratedContract {
   /// like the gas price, nonce and max gas. The `data` and `to` fields will be
   /// set by the contract.
   Future<String> safeTransferFrom$2(
-    _i1.EthereumAddress _from,
-    _i1.EthereumAddress _to,
-    BigInt _tokenId,
-    _i2.Uint8List data, {
+    ({
+      _i1.EthereumAddress _from,
+      _i1.EthereumAddress _to,
+      BigInt _tokenId,
+      _i2.Uint8List data
+    }) args, {
     required _i1.Credentials credentials,
     _i1.Transaction? transaction,
   }) async {
     final function = self.abi.functions[1];
     assert(checkSignature(function, 'b88d4fde'));
     final params = [
-      _from,
-      _to,
-      _tokenId,
-      data,
+      args._from,
+      args._to,
+      args._tokenId,
+      args.data,
     ];
     return write(
       credentials,
@@ -592,7 +595,7 @@ class Contract extends _i1.GeneratedContract {
   }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -619,17 +622,15 @@ class Contract extends _i1.GeneratedContract {
   /// set, the function will be evaluated in the specified block. By default, the
   /// latest on-chain block will be used.
   Future<void> verifyServiceOwnership(
-    BigInt tokenId,
-    String serviceType,
-    String serviceId, {
+    ({BigInt tokenId, String serviceType, String serviceId}) args, {
     _i1.BlockNum? atBlock,
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '2ecff2f6'));
     final params = [
-      tokenId,
-      serviceType,
-      serviceId,
+      args.tokenId,
+      args.serviceType,
+      args.serviceId,
     ];
     final response = await read(
       function,
@@ -692,7 +693,7 @@ class Contract extends _i1.GeneratedContract {
   }
 ]''': r'''
 // Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=2.12
+// @dart=3.0.0
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 import 'dart:typed_data' as _i2;

@@ -36,8 +36,11 @@ const testCases = <String, String>{
       "type": "function"
     }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -147,8 +150,11 @@ class Retrieve3 {
       "type": "function"
     }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -256,8 +262,11 @@ class GiveMeHello {
         "type": "function"
     }   
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -311,8 +320,11 @@ class Contract extends _i1.GeneratedContract {
         "type":"receive"
     }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -352,8 +364,11 @@ class Contract extends _i1.GeneratedContract {
         "type": "function"
     }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -407,8 +422,11 @@ class Contract extends _i1.GeneratedContract {
         "version": 1
     }
 }''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -486,8 +504,11 @@ class Contract extends _i1.GeneratedContract {
         "type": "function"
     }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 import 'dart:typed_data' as _i2;
@@ -515,20 +536,16 @@ class Contract extends _i1.GeneratedContract {
   /// like the gas price, nonce and max gas. The `data` and `to` fields will be
   /// set by the contract.
   Future<String> safeTransferFrom(
-    ({
-      _i1.EthereumAddress _from,
-      _i1.EthereumAddress _to,
-      BigInt _tokenId
-    }) args, {
+    ({_i1.EthereumAddress from, _i1.EthereumAddress to, BigInt tokenId}) args, {
     required _i1.Credentials credentials,
     _i1.Transaction? transaction,
   }) async {
     final function = self.abi.functions[0];
     assert(checkSignature(function, '42842e0e'));
     final params = [
-      args._from,
-      args._to,
-      args._tokenId,
+      args.from,
+      args.to,
+      args.tokenId,
     ];
     return write(
       credentials,
@@ -543,9 +560,9 @@ class Contract extends _i1.GeneratedContract {
   /// set by the contract.
   Future<String> safeTransferFrom$2(
     ({
-      _i1.EthereumAddress _from,
-      _i1.EthereumAddress _to,
-      BigInt _tokenId,
+      _i1.EthereumAddress from,
+      _i1.EthereumAddress to,
+      BigInt tokenId,
       _i2.Uint8List data
     }) args, {
     required _i1.Credentials credentials,
@@ -554,9 +571,9 @@ class Contract extends _i1.GeneratedContract {
     final function = self.abi.functions[1];
     assert(checkSignature(function, 'b88d4fde'));
     final params = [
-      args._from,
-      args._to,
-      args._tokenId,
+      args.from,
+      args.to,
+      args.tokenId,
       args.data,
     ];
     return write(
@@ -594,8 +611,11 @@ class Contract extends _i1.GeneratedContract {
     "type": "function"
   }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 
@@ -692,8 +712,11 @@ class Contract extends _i1.GeneratedContract {
     "type": "event"
   }
 ]''': r'''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:web3dart/web3dart.dart' as _i1;
 import 'dart:typed_data' as _i2;

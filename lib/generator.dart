@@ -60,8 +60,11 @@ class ContractGenerator implements Builder {
 
     final emitter = DartEmitter(allocator: Allocator.simplePrefixing(), useNullSafetySyntax: true);
     final source = '''
-// Generated code, do not modify. Run `build_runner build` to re-generate!
-// @dart=3.0.0
+// @dart=3.0
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_local_variable, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 ${library.accept(emitter)}''';
 
     try {
@@ -118,7 +121,7 @@ class _ContractGeneration {
   String _nameOfParameter(FunctionParameter p) {
     return _parameterNames.putIfAbsent(p, () {
       if (p.name.isEmpty) return '\$param${_parameterNames.length}';
-      return p.name;
+      return p.name.omitUnderscore();
     });
   }
 
@@ -126,10 +129,11 @@ class _ContractGeneration {
     return Library((b) {
       b.body
         ..add(Block((b) => b
-          ..addExpression(contractAbi.newInstanceNamed(
+          ..addExpression(
+              declareFinal('_contractAbi').assign(contractAbi.newInstanceNamed(
             'fromJson',
             [literalString(_abiCode), literalString(_abi.name)],
-          ).assignFinal('_contractAbi'))))
+          )))))
         ..add(Class(_createContractClass))
         ..addAll(_additionalSpecs);
     });
@@ -233,17 +237,6 @@ class _ContractGeneration {
     }
   }
 
-  // List<Parameter> _parametersFor(ContractFunction function) {
-  //   final parameters = <Parameter>[];
-  //   for (final param in function.parameters) {
-  //     parameters.add(Parameter((b) => b
-  //       ..name = _nameOfParameter(param)
-  //       ..type = param.type.toDart()));
-  //   }
-  //
-  //   return parameters;
-  // }
-
   List<Parameter> _parametersFor(ContractFunction function) {
     return [
       if (function.parameters.isNotEmpty)
@@ -275,8 +268,8 @@ class _ContractGeneration {
       _assignFunction(b.statements, function, index);
 
       b
-        ..addExpression(literalList(params).assignFinal('params'))
-        ..addExpression(refer('read').call([argFunction, argParams, refer('atBlock')]).awaited.assignFinal('response'));
+        ..addExpression(declareFinal('params').assign(literalList(params)))
+        ..addExpression(declareFinal('response').assign(refer('read').call([argFunction, argParams, refer('atBlock')]).awaited));
       if (returnValue != null) {
         b.addExpression(returnValue.returned);
       }
@@ -296,7 +289,7 @@ class _ContractGeneration {
       _assignFunction(b.statements, function, index);
 
       b
-        ..addExpression(literalList(params).assignFinal('params'))
+        ..addExpression(declareFinal('params').assign(literalList(params)))
         ..addExpression(funWrite.returned);
     });
   }
@@ -368,12 +361,12 @@ class _ContractGeneration {
           ..type = filterEvent))
         ..body = Block(
           (b) => b
-            ..addExpression(
-                refer('event').property('decodeResults').call(const [
+            ..addExpression(declareFinal('decoded')
+                .assign(refer('event').property('decodeResults').call(const [
               // todo: Use nullChecked after https://github.com/dart-lang/code_builder/pull/325
               CodeExpression(Code('result.topics!')),
               CodeExpression(Code('result.data!')),
-            ]).assignFinal('decoded'))
+            ])))
             ..addExpression(eventClass.newInstance([
               refer('decoded'),
               CodeExpression(Code('result')),
@@ -395,13 +388,14 @@ class _ContractGeneration {
         ..named = true
         ..type = nullableBlockNum))
       ..body = Block((b) => b
-        ..addExpression(_event(event).assignFinal('event'))
-        ..addExpression(filterOptions.newInstanceNamed('events', const [], {
+        ..addExpression(declareFinal('event').assign(_event(event)))
+        ..addExpression(declareFinal('filter')
+            .assign(filterOptions.newInstanceNamed('events', const [], {
           'contract': self,
           'event': refer('event'),
           'fromBlock': refer('fromBlock'),
           'toBlock': refer('toBlock'),
-        }).assignFinal('filter'))
+        })))
         ..addExpression(client.property('events').call([refer('filter')]).property('map').call([mapper.closure]).returned));
   }
 
@@ -411,7 +405,7 @@ class _ContractGeneration {
   void _assignFunction(ListBuilder<Code> statements, ContractFunction function, int index) {
     final functionExpr = self.property('abi').property('functions').index(literalNum(index));
 
-    statements.add(functionExpr.assignFinal('function').statement);
+    statements.add(declareFinal('function').assign(functionExpr).statement);
 
     // Assert that we got the right function, just to be sure
     final selector = bytesToHex(function.selector);
@@ -478,5 +472,13 @@ extension on Expression {
 
     // Ok, not a list. Let's just do a regular Dart cast then.
     return result.asA(type.toDart());
+  }
+}
+
+extension on String {
+  String omitUnderscore() {
+    return startsWith('_')
+        ? substring(1)
+        : this;
   }
 }

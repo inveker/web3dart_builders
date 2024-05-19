@@ -1,3 +1,4 @@
+## [0.1.1] - Fixed: Records type can't start with underscore
 ## [0.1.0] - Changed min dart version to 3.0.0. Fixed shadowing of function argument names
 ## [0.0.7] - Added overloading events
 ## [0.0.6] - Added immutable functions without outputs

@@ -87,6 +87,7 @@ class _ContractGeneration {
   final List<Spec> _additionalSpecs = [];
   final Map<FunctionParameter, String> _parameterNames = {};
   final Map<ContractFunction, Reference> _functionToResultClass = {};
+  final Map<String, int> _usedResultClassNames = {};
   final Map<String, int> _usedFunctionNames = {};
   final Map<String, int> _usedEventNames = {};
 
@@ -97,6 +98,17 @@ class _ContractGeneration {
   static final client = refer('client');
 
   _ContractGeneration(this._abi, this._abiCode, this.documentation);
+
+  String _nameOfResultClass(ContractFunction function) {
+    final functionName = function.name.omitUnderscore();
+    final name = '${functionName[0].toUpperCase()}${functionName.substring(1)}';
+    final number = _usedResultClassNames[name] = (_usedResultClassNames[name] ?? 0) + 1;
+    if (number == 1) {
+      return name;
+    } else {
+      return '$name\$$number';
+    }
+  }
 
   String _nameOfFunction(ContractFunction function) {
     final number = _usedFunctionNames[function.name] = (_usedFunctionNames[function.name] ?? 0) + 1;
@@ -298,9 +310,7 @@ class _ContractGeneration {
   /// with multiple return values.
   Reference _resultClassFor(ContractFunction function) {
     return _functionToResultClass.putIfAbsent(function, () {
-      final functionName = function.name;
-      final name = '${functionName[0].toUpperCase()}${functionName.substring(1)}';
-      return _generateResultClass(function.outputs, name);
+      return _generateResultClass(function.outputs, _nameOfResultClass(function));
     });
   }
 

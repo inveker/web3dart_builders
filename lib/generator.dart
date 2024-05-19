@@ -277,7 +277,7 @@ class _ContractGeneration {
   }
 
   Code _bodyForMutable(ContractFunction function, int index) {
-    final params = function.parameters.map((e) => refer('args.${e.name}')).toList();
+    final params = function.parameters.map((e) => refer('args.${_nameOfParameter(e)}')).toList();
     final funWrite = refer('write').call([
       argCredentials,
       refer('transaction'),

@@ -22,12 +22,12 @@ dart pub add web3dart_builders --dev
 
 # Usage
 ```shell
-pub run build_runner build
+dart pub run build_runner build
 ```
 
 or
 ```shell
-pub run build_runner watch
+dart pub run build_runner watch
 ```
 
 # Test

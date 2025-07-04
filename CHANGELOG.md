@@ -1,3 +1,4 @@
+## [3.0.1] - Update web3dart version
 ## [0.1.2] - Added overloading result class
 ## [0.1.1] - Fixed: Records type can't start with underscore
 ## [0.1.0] - Changed min dart version to 3.0.0. Fixed shadowing of function argument names

@@ -1,6 +1,6 @@
 name: web3dart_builders
 description: Extension of the web3dart package that includes the dart contract generator from abi.
-version: 0.1.2
+version: 3.0.1
 repository: https://github.com/inveker/web3dart_builders
 homepage: https://github.com/inveker/web3dart_builders
 
@@ -8,17 +8,17 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  build: ^2.3.1
-  code_builder: ^4.4.0
+  build: ^2.5.4
+  code_builder: ^4.10.1
   built_collection: ^5.1.1
-  path: ^1.8.3
+  path: ^1.9.1
   dart_style: ^2.2.4
   wallet: ^0.0.17
   web3dart: ^3.0.1
 
 dev_dependencies:
   lints: ^2.1.1
-  test: ^1.21.0
-  build_runner: ^2.4.9
-  build_config: ^1.1.1
-  build_test: ^2.1.6
+  test: ^1.26.2
+  build_runner: ^2.5.4
+  build_config: ^1.1.2
+  build_test: ^3.2.1

@@ -10,7 +10,7 @@ web3dart 2.5.1
 
 # Installation
 
-1. Add to pubspec.yaml in your project: dev_dependencies: web3dart_builders: ^0.1.2 or call
+1. Add to pubspec.yaml in your project: dev_dependencies: web3dart_builders: ^3.0.1 or call
 
 ```shell
 dart pub add build_runner --dev

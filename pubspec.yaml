@@ -10,10 +10,11 @@ environment:
 dependencies:
   build: ^2.3.1
   code_builder: ^4.4.0
-  web3dart: ^2.6.1
   built_collection: ^5.1.1
   path: ^1.8.3
   dart_style: ^2.2.4
+  wallet: ^0.0.17
+  web3dart: ^3.0.1
 
 dev_dependencies:
   lints: ^2.1.1

@@ -1,8 +1,8 @@
 import 'package:code_builder/code_builder.dart' hide FunctionType;
-import 'package:web3dart/contracts.dart';
+import 'package:web3dart/web3dart.dart';
 
-
-const package = 'package:web3dart/web3dart.dart';
+const web3package = 'package:web3dart/web3dart.dart';
+const walletPackage = 'package:wallet/wallet.dart';
 
 TypeReference referType(String name, [String? uri]) {
   return TypeReference((b) => b
@@ -18,17 +18,17 @@ final uint8List = referType('Uint8List', 'dart:typed_data');
 final dynamicType = referType('dynamic', 'dart:core');
 final listType = listify(dynamicType);
 
-final web3Client = referType('Web3Client', package);
-final ethereumAddress = referType('EthereumAddress', package);
-final blockNum = referType('BlockNum', package);
-final credentials = referType('Credentials', package);
-final contractAbi = referType('ContractAbi', package);
-final deployedContract = referType('DeployedContract', package);
-final generatedContract = referType('GeneratedContract', package);
-final transactionType = referType('Transaction', package);
-final filterOptions = referType('FilterOptions', package);
-final filterEvent = referType('FilterEvent', package);
-final stateMutability = referType('StateMutability', package);
+final web3Client = referType('Web3Client', web3package);
+final ethereumAddress = referType('EthereumAddress', walletPackage);
+final blockNum = referType('BlockNum', web3package);
+final credentials = referType('Credentials', web3package);
+final contractAbi = referType('ContractAbi', web3package);
+final deployedContract = referType('DeployedContract', web3package);
+final generatedContract = referType('GeneratedContract', web3package);
+final transactionType = referType('Transaction', web3package);
+final filterOptions = referType('FilterOptions', web3package);
+final filterEvent = referType('FilterEvent', web3package);
+final stateMutability = referType('StateMutability', web3package);
 
 final mutabilities = {
   StateMutability.pure: stateMutability.property('pure'),
@@ -39,11 +39,11 @@ final mutabilities = {
 
 final functionTypes = {
   ContractFunctionType.function:
-  refer('ContractFunctionType.function', package),
+      refer('ContractFunctionType.function', web3package),
   ContractFunctionType.fallback:
-  refer('ContractFunctionType.fallback', package),
+      refer('ContractFunctionType.fallback', web3package),
   ContractFunctionType.constructor:
-  refer('ContractFunctionType.constructor', package),
+      refer('ContractFunctionType.constructor', web3package),
 };
 
 Reference futurize(Reference r) {
